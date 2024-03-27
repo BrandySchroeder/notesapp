@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useEffect, useReducer} from 'react';
-import { Amplify, API } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
 import { List } from 'antd'
 import 'antd/dist/reset.css';
 import { listNotes } from './graphql/queries';
@@ -27,9 +26,11 @@ function reducer(state, action) {
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const client = generateClient();
+
   const fetchNotes = async() => {
     try {
-      const notesData = await API.graphql({
+      const notesData = await client.graphql({
         query: listNotes
       });
       dispatch({ type: 'SET_NOTES', notes: notesData.data.listNotes.items });

@@ -1,9 +1,11 @@
 import './App.css';
 import React, {useEffect, useReducer} from 'react';
 import { generateClient } from 'aws-amplify/api';
-import { List } from 'antd';
+import { List, Input, Button } from 'antd';
 import 'antd/dist/reset.css';
+import { v4 as uuid } from 'uuid';
 import { listNotes } from './graphql/queries';
+import { createNote as CreateNote } from './graphql/mutations';
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 

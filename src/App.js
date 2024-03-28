@@ -1,9 +1,15 @@
 import './App.css';
 import React, {useEffect, useReducer} from 'react';
 import { generateClient } from 'aws-amplify/api';
-import { List } from 'antd'
+import { List } from 'antd';
 import 'antd/dist/reset.css';
 import { listNotes } from './graphql/queries';
+import { Amplify } from 'aws-amplify';
+import amplifyconfig from './amplifyconfiguration.json';
+
+Amplify.configure(amplifyconfig);
+
+const client = generateClient();
 
 const initialState = {
   notes: [],
@@ -26,8 +32,6 @@ function reducer(state, action) {
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const client = generateClient();
-
   const fetchNotes = async() => {
     try {
       const notesData = await client.graphql({
@@ -38,11 +42,6 @@ const App = () => {
       console.error(err);
       dispatch({ type: 'ERROR' });
     }
-    //code from coins lab to access payload - do I need this here?
-
-    //const { body } = await restOperation.response;
-    //const json = await body.json();
-    //updateCoins(json.coins);
   };
 
   useEffect(() => {

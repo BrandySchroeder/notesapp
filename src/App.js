@@ -10,6 +10,7 @@ import {
   updateNote as UpdateNote,
   deleteNote as DeleteNote
 } from './graphql/mutations';
+import { onCreateNote } from './graphql/subscriptions';
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 
@@ -114,9 +115,20 @@ const onChange = (e) => {
   dispatch({ type: 'SET_INPUT', name: e.target.name, value: e.target.value });
 };
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+useEffect(() => {
+  fetchNotes()
+  const subscription = client.graphql({
+    query: onCreateNote
+  })
+    .subscribe({
+      next: noteData => {
+        const note = noteData.data.onCreateNote
+        if (CLIENT_ID === note.clientId) return
+        dispatch({ type: 'ADD_NOTE', note })
+      }
+    })
+    return () => subscription.unsubscribe();
+}, []);
 
 const styles = {
   container: {padding: 20},

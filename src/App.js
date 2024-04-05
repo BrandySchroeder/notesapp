@@ -132,7 +132,7 @@ useEffect(() => {
 
 const styles = {
   container: {padding: 20},
-  input: {marginBottom: 10},
+  input: { marginBottom: 10 },
   item: { textAlign: 'left' },
   p: { color: '#1890ff' }
 };
@@ -140,12 +140,28 @@ const styles = {
 function renderItem(item) {
   return (
     <List.Item 
-      style={styles.item}
       actions={[
-        <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-        <p style={styles.p} onClick={() => updateNote(item)}>
-          {item.completed ? 'completed' : 'mark completed'}
-        </p>
+        <label className="labelForDoneCheckbox">
+          Done     
+          <input 
+            className="doneCheckbox"
+            type="checkbox" 
+            name="done checkbox" 
+            defaultChecked={false} 
+            onClick={() => updateNote(item)}
+            {...item.completed='completed'}
+          />
+        </label>,
+        <Button type="primary" onClick={() => deleteNote(item)}>
+          Delete
+        </Button>
+        // <Button type="primary" onClick={() => updateNote(item)}>
+        //   {item.completed ? 'completed' : 'incomplete'}
+        // </Button>,
+        // <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
+        // <p style={styles.p} onClick={() => updateNote(item)}>
+        //   {item.completed ? 'completed' : 'mark completed'}
+        // </p>
       ]}
     >
       <List.Item.Meta

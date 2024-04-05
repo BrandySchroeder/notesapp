@@ -7,6 +7,17 @@
   pointer-events: none;
 }
 
+.labelForDoneCheckbox {
+  margin-right: 25px;
+  font-size: large;
+  font-weight: 500;
+  color: black;
+}
+
+.doneCheckbox {
+  margin-left: 10px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

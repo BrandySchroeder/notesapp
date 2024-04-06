@@ -24,7 +24,8 @@ const initialState = {
   notes: [],
   loading: true,
   error: false,
-  form: { name: '', description: '' }
+  form: { name: '', description: '' },
+  checked: false
 }
 
 function reducer(state, action) {
@@ -112,7 +113,11 @@ const updateNote = async(note) => {
 };
 
 const onChange = (e) => {
-  dispatch({ type: 'SET_INPUT', name: e.target.name, value: e.target.value });
+  dispatch({ type: 'SET_INPUT', name: e.target.name, value: e.target.value })
+    //console.log(`switch to ${checked}`);
+  // AntD checked code
+  // console.log('checked = ', e.target.checked);
+  // setChecked(e.target.checked);
 };
 
 useEffect(() => {
@@ -148,20 +153,13 @@ function renderItem(item) {
             type="checkbox" 
             name="done checkbox" 
             defaultChecked={false} 
-            onClick={() => updateNote(item)}
-            {...item.completed='completed'}
+            onChange={() => updateNote(item)}
+            {...item.completed ? 'completed' : 'mark completed'}
           />
         </label>,
         <Button type="primary" onClick={() => deleteNote(item)}>
           Delete
         </Button>
-        // <Button type="primary" onClick={() => updateNote(item)}>
-        //   {item.completed ? 'completed' : 'incomplete'}
-        // </Button>,
-        // <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-        // <p style={styles.p} onClick={() => updateNote(item)}>
-        //   {item.completed ? 'completed' : 'mark completed'}
-        // </p>
       ]}
     >
       <List.Item.Meta
@@ -202,3 +200,10 @@ function renderItem(item) {
 }
 
 export default App;
+
+        
+        //Original code with completed / mark completed
+        // <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
+        // <p style={styles.p} onClick={() => updateNote(item)}>
+        //   {item.completed ? 'completed' : 'mark completed'}
+        // </p>

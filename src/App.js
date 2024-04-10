@@ -82,7 +82,7 @@ const createNote = async() => {
 const deleteNote = async({ id }) => {
   const index = state.notes.findIndex(n => n.id === id)
   const notes = [
-    ...state.notes.slice(0, index), //TODO add a filter?
+    ...state.notes.slice(0, index), 
     ...state.notes.slice(index + 1)];
   dispatch({ type: 'SET_NOTES', notes })
   try {
@@ -114,10 +114,6 @@ const updateNote = async(note) => {
 
 const onChange = (e) => {
   dispatch({ type: 'SET_INPUT', name: e.target.name, value: e.target.value })
-    //console.log(`switch to ${checked}`);
-  // AntD checked code
-  // console.log('checked = ', e.target.checked);
-  // setChecked(e.target.checked);
 };
 
 useEffect(() => {
@@ -146,17 +142,21 @@ function renderItem(item) {
   return (
     <List.Item 
       actions={[
-        <label className="labelForDoneCheckbox">
-          Done     
+        <p style={styles.p} onClick={() => updateNote(item)}> 
+          {item.completed ? <label className="labelForDoneCheckbox">
+            Done     
           <input 
             className="doneCheckbox"
             type="checkbox" 
             name="done checkbox" 
-            defaultChecked={false} 
-            onChange={() => updateNote(item)}
-            {...item.completed ? 'completed' : 'mark completed'}
-          />
-        </label>,
+            defaultChecked={true} /></label> : <label className="labelForDoneCheckbox">
+            Done     
+          <input 
+            className="doneCheckbox"
+            type="checkbox" 
+            name="done checkbox" 
+            defaultChecked={false} /></label>}
+          </p>,
         <Button type="primary" onClick={() => deleteNote(item)}>
           Delete
         </Button>
@@ -165,6 +165,7 @@ function renderItem(item) {
       <List.Item.Meta
         title={item.name}
         description={item.description}
+        checked={false}
       />
     </List.Item>
   )
@@ -201,9 +202,3 @@ function renderItem(item) {
 
 export default App;
 
-        
-        //Original code with completed / mark completed
-        // <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-        // <p style={styles.p} onClick={() => updateNote(item)}>
-        //   {item.completed ? 'completed' : 'mark completed'}
-        // </p>

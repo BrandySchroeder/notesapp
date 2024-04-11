@@ -24,8 +24,7 @@ const initialState = {
   notes: [],
   loading: true,
   error: false,
-  form: { name: '', description: '' },
-  checked: false
+  form: { name: '', description: '' }
 }
 
 function reducer(state, action) {
@@ -143,19 +142,29 @@ function renderItem(item) {
     <List.Item 
       actions={[
         <p style={styles.p} onClick={() => updateNote(item)}> 
-          {item.completed ? <label className="labelForDoneCheckbox">
+          {item.completed 
+            ? 
+          <label 
+            className="labelForDoneCheckbox"
+          >
             Done     
           <input 
             className="doneCheckbox"
             type="checkbox" 
             name="done checkbox" 
-            defaultChecked={true} /></label> : <label className="labelForDoneCheckbox">
+            defaultChecked={true} 
+          />
+          </label> 
+            : 
+          <label 
+            className="labelForDoneCheckbox">
             Done     
           <input 
             className="doneCheckbox"
             type="checkbox" 
             name="done checkbox" 
-            defaultChecked={false} /></label>}
+            defaultChecked={false} />
+          </label>}
           </p>,
         <Button type="primary" onClick={() => deleteNote(item)}>
           Delete
@@ -165,7 +174,6 @@ function renderItem(item) {
       <List.Item.Meta
         title={item.name}
         description={item.description}
-        checked={false}
       />
     </List.Item>
   )
@@ -196,6 +204,7 @@ function renderItem(item) {
         dataSource={state.notes}
         renderItem={renderItem}
       />
+
     </div>
   );
 }
